@@ -11,7 +11,7 @@ module.exports = new localStrategy({
         if(!user){
             return done(null, false);
         }
-        const isMatch = await usuario.comparePassword(password, user.contraseña);
+        const isMatch = await usuario.comparePassword(password, user.password);
         if(isMatch) return done(null, user);
         else return done(null, false)
     }catch(err){
