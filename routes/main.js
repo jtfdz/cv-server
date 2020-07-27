@@ -28,7 +28,7 @@ router.post('/registro',
     const errors = validationResult(req)
       if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array()  })
-      }
+      }w
 
     user.registrarUsuario(req.body).then((result)=>{
         let count = result.rowCount;
