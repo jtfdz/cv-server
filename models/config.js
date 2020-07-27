@@ -13,9 +13,10 @@ const config = {
     q6: 'SELECT * from nota_tabla WHERE id_usuario = $1',
     q7: 'SELECT tipo_contenido, count(*) from nota_tabla WHERE id_usuario=$1 group by tipo_contenido HAVING count(*) > 0 ORDER BY count(*) LIMIT 1;',
     q8: 'SELECT fecha, count(*) from nota_tabla WHERE id_usuario=$1 AND fecha=current_date group by fecha HAVING count(*) > 0 ORDER BY count(*) LIMIT 1;',
-    q9: 'SELECT fecha, count(*) from nota_tabla WHERE id_usuario=1 AND ((SELECT extract(month from fecha)) =	(SELECT extract(month from current_date))) group by fecha  HAVING count(*) > 1 LIMIT 1;',
+    q9: 'SELECT (SELECT extract(month from fecha)), count(*) from nota_tabla WHERE id_usuario=$1 group by 1 HAVING count(*) > 0;',
     q10: 'DELETE FROM nota_tabla WHERE id_nota= $1 AND id_usuario= $2',
-    q11: 'SELECT * FROM nota_tabla WHERE id_nota=$1' 
+    q11: 'SELECT * FROM nota_tabla WHERE id_nota=$1',
+    q12: 'UPDATE nota_tabla SET titulo=$1, contenido=$2 WHERE id_nota=$3 AND id_usuario=$4' 
 }
 
 

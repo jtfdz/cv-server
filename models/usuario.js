@@ -8,13 +8,6 @@ const config = require('./config');
 
 
 
-
-
-
-
-
-
-
 module.exports.registrarUsuario = async (data) => {
     try{
         const result = await db.result(config.q1, [data.username, bcrypt.hashSync(data.passwords.password, 10), data.nombre, sessionHelper.getCurrentTime(), data.email] );
@@ -107,22 +100,9 @@ module.exports.notaMostrar = async (id) => {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-module.exports.postModificar = async (data,id) => {
+module.exports.notaEditar = async (data, idn, idu) => {
     try {
-        const result = await db.none('UPDATE post SET titulo_post = $1, contenido_post = $2, imagen_post = $3,  WHERE id_post = $5', [data.titulo,data.contenido,data.imagen]);
+        const result = await db.none(config.q12, [data.titulo,data.contenido,idn, idu]);
         return result
     }catch(e){
         throw e;

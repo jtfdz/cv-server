@@ -4,8 +4,8 @@ let passport = require('passport')
 let auth = require('../controllers/Authentication');
 let sessionHelper = require('../models/session');
 let user = require('../models/usuario');
-
 const { check, validationResult } = require('express-validator');
+
 
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -120,43 +120,12 @@ router.get('/nota/:id', auth.isAuth, (req, res) => {
 })
 
 
-
-
-
-
-
-
-
-
-
-router.get('/pagina', auth.isAuth, (req, res) => {
-    user.Despliegue(sessionHelper.getIdFromSession(req)).then((data) => {
-        let message, status;
-        if(data !== null){
-            message = "feed desplegado :).";
-            status = 200;
-        }else{
-            message = "error al desplegar el feed :(.",
-            status = 404;
-        }
-        res.json({data, message, status});
+router.put('/nota/:id/editar', auth.isAuth, (req, res) => {
+    user.notaEditar(req.body, req.params.id, sessionHelper.getIdFromSession(req)).then((result) => {
+        res.json({status: 200, message: 'Nota modificada :).'})
     }).catch(err => {
         console.log(err)
-        res.json({status: 500, message: 'Error'})  
-    })
-})
-
-
-
-
-
-
-router.put('/pagina/:id/editar', auth.isAuth, (req, res) => {
-    user.paginaModificar(req.body,req.params.id,sessionHelper.getIdFromSession(req)).then((result) => {
-        res.json({status: 200, message: 'Página modificada.'})
-    }).catch(err => {
-        console.log(err)
-        res.json({status: 500, message: 'Error al modificar página.'})
+        res.json({status: 500, message: 'Error al modificar nota :(.'})
     })
 })
 
