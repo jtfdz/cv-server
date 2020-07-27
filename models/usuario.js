@@ -10,7 +10,7 @@ const config = require('./config');
 
 module.exports.registrarUsuario = async (data) => {
     try{
-        const result = await db.result(config.q1, [data.username, bcrypt.hashSync(data.passwords.password, 10), data.nombre, sessionHelper.getCurrentTime(), data.email] );
+        const result = await db.result(config.q1, [data.username, bcrypt.hashSync(data.passwords.password, 10), data.nombre, sessionHelper.getCurrentTime(), data.email, data.tipo] );
         return result
     }catch(err){
         throw err

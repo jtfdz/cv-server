@@ -7,15 +7,9 @@ var passport = require('passport');
 var logger = require('morgan');
 var mainRouter = require('./routes/main');
 let usuario = require('./models/usuario');
-var cors = require('cors');
+
 var app = express();
 
-app.use(cors({
-  methodS: "GET,PUT,POST,DELETE",
-  credentials: true,
-  optionsSuccessStatus: 200,
-  origin: 'http://localhost:8100' //CAMBIAR AL LINK DE HEROKU ETCÉTERA
-  }));
 
 app.use(logger('dev')); //  formato_ Concise output colored by response status for development use.
 app.use(express.json());
