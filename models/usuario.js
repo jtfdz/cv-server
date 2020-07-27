@@ -6,16 +6,15 @@ const config = require('./config');
 
 
 
-
-
-module.exports.registrarUsuario = async (data) => {
+module.exports.registrar = async (data) => {
     try{
-        const result = await db.result(config.q1, [data.username, bcrypt.hashSync(data.passwords.password, 10), data.nombre, sessionHelper.getCurrentTime(), data.email, data.tipo] );
+        const result = await db.result(config.q1, [data.username, bcrypt.hashSync(data.password, 10), data.nombre, sessionHelper.getCurrentTime(), data.email, data.tipo] );
         return result
     }catch(err){
         throw err
     }
 }
+
 
 module.exports.getUserByUsername = async (username) => {
     try{

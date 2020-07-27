@@ -20,10 +20,12 @@ router.get('/logout', auth.isAuth, function(req, res){
     res.json({mensaje: "Logged out con éxito.", status: 200})
 })
 
-router.post('/registro', 
+
+router.post('/registrar', 
     check('email').custom(value => { return user.checkingEmail(value).then(user =>{if(user){ return Promise.reject('Correo en existencia.'); } } )}),
     check('username').custom(value => { return user.getUserByUsername(value).then(user =>{if(user){ return Promise.reject('Nombre de usuario en existencia. Intente con uno diferente.'); } } )}),
     auth.isLogged, function(req, res){
+
 
 
     const errors = validationResult(req)
@@ -31,22 +33,20 @@ router.post('/registro',
         return res.status(422).json({ errors: errors.array()  })
       }
 
-
-
-    user.registrarUsuario(req.body).then((result)=>{
-        let count = result.rowCount;
-        let status, mensaje;
-        if(count > 0){
-            status = 200;
-            mensaje = "Usuario Registrado :).";
-        }else{
-          status = 500;
-          mensaje = 'Error al registrar Usuario :(.'
-          }
-      res.json({status, mensaje})
-      }).catch(err => {
-        console.log(err);
-        res.status(500).json({status: 500, mensaje: 'Error al Registrar :(.'});
+    user.registrar(req.body).then((result)=>{
+            let count = result.rowCount;
+            let status, mensaje;
+            if(count > 0){
+                status = 200;
+                mensaje = "Usuario Registrado :).";
+            }else{
+              status = 500;
+              mensaje = 'Error al registrar Usuario :(.'
+              }
+          res.json({status, mensaje})
+          }).catch(err => {
+            console.log(err);
+            res.status(500).json({status: 500, mensaje: 'Error al Registrar :(.'});
         }) 
 });
 
