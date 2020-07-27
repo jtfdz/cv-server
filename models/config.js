@@ -3,8 +3,8 @@ const qformat = {
 }
 
 const config = {
-    dbUrl: 'postgres://postgres:masterkey@localhost:9999/notas_moviles',
-    port: 3000,
+    dbUrl: 'postgres://spcocaurofywbf:d5c784332236bb43151fad6dd006f908e6a1f42c4df7f2595c8b70a0e13563c4@ec2-35-175-155-248.compute-1.amazonaws.com:5432/d377obaok0uup3',
+    port: 5432,
     q1: 'INSERT INTO usuario_tabla(id_usuario, alias_usuario, contraseña, nombre, fecha_registro, correo) VALUES (DEFAULT, $1, $2, $3, $4, $5)',
     q2:  qformat.select + ' alias_usuario = $1',
     q3:  qformat.select + ' correo = $1',
