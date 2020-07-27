@@ -14,7 +14,7 @@ app.use(cors({
   methodS: "GET,PUT,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 200,
-  origin: 'https://moviles02cv.herokuapp.com/' 
+  origin: 'true' 
   }));
 
 app.use(logger('dev')); //  formato_ Concise output colored by response status for development use.
