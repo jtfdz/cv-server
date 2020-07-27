@@ -25,10 +25,13 @@ router.post('/registro',
     check('username').custom(value => { return user.getUserByUsername(value).then(user =>{if(user){ return Promise.reject('Nombre de usuario en existencia. Intente con uno diferente.'); } } )}),
     auth.isLogged, function(req, res){
 
+
     const errors = validationResult(req)
       if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array()  })
-      }w
+      }
+
+
 
     user.registrarUsuario(req.body).then((result)=>{
         let count = result.rowCount;
