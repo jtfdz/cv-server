@@ -5,10 +5,18 @@ let sessionHelper = require('../models/session');
 const config = require('./config');
 
 
-
 module.exports.registrar = async (data) => {
     try{
         const result = await db.result(config.q1, [data.username, bcrypt.hashSync(data.password, 10), data.nombre, sessionHelper.getCurrentTime(), data.email, data.tipo] );
+        return result
+    }catch(err){
+        throw err
+    }
+}
+
+module.exports.correoTemporal = async (id,code) => {
+    try{
+        const result = await db.result(config.q13, [id,code] );
         return result
     }catch(err){
         throw err
@@ -20,6 +28,7 @@ module.exports.getUserByUsername = async (username) => {
     try{
         const data = await db.oneOrNone(config.q2, [username]);
         return data;
+
     }catch(err){
         throw err
     }

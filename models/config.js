@@ -16,7 +16,8 @@ const config = {
     q9: 'SELECT (SELECT extract(month from fecha)), count(*) from nota_tabla WHERE id_usuario=$1 group by 1 HAVING count(*) > 0;',
     q10: 'DELETE FROM nota_tabla WHERE id_nota= $1 AND id_usuario= $2',
     q11: 'SELECT * FROM nota_tabla WHERE id_nota=$1',
-    q12: 'UPDATE nota_tabla SET titulo=$1, contenido=$2 WHERE id_nota=$3 AND id_usuario=$4' 
+    q12: 'UPDATE nota_tabla SET titulo=$1, contenido=$2 WHERE id_nota=$3 AND id_usuario=$4',
+    q13: 'INSERT INTO temporal_code(id_code, id_usuario, codigo) VALUES(DEFAULT, $1, $2)'
 }
 
 
