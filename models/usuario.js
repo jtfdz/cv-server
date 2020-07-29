@@ -58,6 +58,46 @@ module.exports.comparePassword = async (candidatePassword, hash) => {
 }
 
 
+
+module.exports.articulosMostrar = async (id) => {
+    try{
+        const result = await db.oneOrNone(config.q14, [id])
+        return result;
+    }catch(err){
+        throw err
+    }
+}
+
+module.exports.articulosMostrarCliente = async () => {
+    try{
+        const result = await db.any(config.q15)
+        return result;
+    }catch(err){
+        throw err
+    }
+}
+
+module.exports.articulosMostrarVendedor = async (id) => {
+    try{
+        const result = await db.any(config.q6, [id])
+        return result;
+    }catch(err){
+        throw err
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 module.exports.notaCrear = async (data,id) => {
     try{
         const result = await db.none(config.q5 , [id, data.tipo, data.contenido, sessionHelper.getCurrentTime(), data.titulo])
@@ -67,14 +107,7 @@ module.exports.notaCrear = async (data,id) => {
     }
 }
 
-module.exports.notasMostrar = async (id) => {
-    try{
-        const result = await db.any(config.q6, [id])
-        return result;
-    }catch(err){
-        throw err
-    }
-}
+
 
 module.exports.estadisticas = async (id) => {
     try{

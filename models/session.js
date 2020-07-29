@@ -30,7 +30,7 @@ const message = {
     from: 'comprasventas.noreply@gmail.com', 
     to: correo,         
     subject: '[CV] CÓDIGO DE AUTENTICACIÓN [NO REPLY]', 
-    html: '<p>SU CÓDIGO:<b>'+code+'</b></p>'
+    html: '<p>CÓDIGO: <b>'+code+'</b>. GRACIAS POR REGISTRARSE.</p>'
 };
 transport.sendMail(message, function(err, info) {
     if (err) {

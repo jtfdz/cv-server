@@ -22,13 +22,10 @@ router.get('/logout', auth.isAuth, function(req, res){
 })
 
 
-
 router.post('/registrar', 
     check('email').custom(value => { return user.checkingEmail(value).then(user =>{if(user){ return Promise.reject('Correo en existencia.'); } } )}),
     check('username').custom(value => { return user.getUserByUsername(value).then(user =>{if(user){ return Promise.reject('Nombre de usuario en existencia. Intente con uno diferente.'); } } )}),
     auth.isLogged, function(req, res){
-
-
 
     const errors = validationResult(req)
       if (!errors.isEmpty()) {
@@ -69,14 +66,82 @@ router.post('/registrar',
 });
 
 
-router.post('/nota/crear', auth.isAuth, (req, res) => {
-    user.notaCrear(req.body, sessionHelper.getIdFromSession(req)).then((result) => {
-        res.json({status: 200, message: 'Nota creada :).'})
+
+
+
+
+
+
+router.get('/articulos', (req, res) => {
+let message, status;
+
+if(req.session.user){
+
+user.articulosMostrar(sessionHelper.getIdFromSession(req)).then((tipo) => {
+        if(tipo === 3){
+            user.articulosMostrarVendedor(sessionHelper.getIdFromSession(req))
+            .then((data) => {
+            message = "artículos desplegado para vendedor :).";
+            status = 200;
+            res.json({tipo, data, message, status});
+            }).catch(err => {
+                console.log(err)
+                message = "artículos desplegados :).";
+                status = 200;
+                res.json({tipo, status: 508, message: 'Error al cargar los artículos de este vendedor.'})  
+            })
+
+        }else{
+
+            user.articulosMostrarCliente()
+            .then((data) => {
+            message = "artículos desplegados para cliente :).";
+            status = 200;
+            res.json({tipo, data, message, status});
+            }).catch(err => {
+                console.log(err)
+                message = "artículos NO desplegados :(.";
+                status = 200;
+                res.json({tipo, status: 508, message: 'Error al cargar los artículos de este cliente.'})  
+            })
+        }
+
     }).catch(err => {
         console.log(err)
-        res.json({status: 500, message: 'Error al crear nota :(.'})
+        res.json({tipo: 0, status: 500, message: 'Error al cargar los artículos.'})  
+    })
+
+
+}else{
+    user.articulosMostrarCliente().then((data) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({status: 200, tipo: 0, data: data, message: "artículos desplegados para cliente :)."});
+    }).catch(err => {
+        console.log(err)
+        res.json({tipo: 0, status: 508, message: 'Error al cargar los artículos de este cliente.'})  
+    })        
+}
+})
+
+
+router.post('/articulo/crear', auth.isAuth, (req, res) => {
+    user.notaCrear(req.body, sessionHelper.getIdFromSession(req)).then((result) => {
+        res.json({status: 200, message: 'Artículo creado :).'})
+    }).catch(err => {
+        console.log(err)
+        res.json({status: 500, message: 'Error al crear artículo :(.'})
     })
 })
+
+
+
+
+
+
+
+
+
+
 
 router.get('/estadisticas', auth.isAuth, (req, res) => {
     user.estadisticas(sessionHelper.getIdFromSession(req)).then((data) => {
@@ -96,22 +161,28 @@ router.get('/estadisticas', auth.isAuth, (req, res) => {
 })
 
 
-router.get('/notas', auth.isAuth, (req, res) => {
-    user.notasMostrar(sessionHelper.getIdFromSession(req)).then((data) => {
-        let message, status;
-        if(data !== null){
-            message = "notas desplegadas :).";
-            status = 200;
-        }else{
-            message = "notas NO desplegadas :(.",
-            status = 404;
-        }
-        res.json({data, message, status});
-    }).catch(err => {
-        console.log(err)
-        res.json({status: 500, message: 'Error al cargar las notas.'})  
-    })
-})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 router.delete('/notas/:id/borrar', auth.isAuth, (req, res) => {
