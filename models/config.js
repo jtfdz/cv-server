@@ -28,7 +28,7 @@ const config = {
 
     q13: 'INSERT INTO temporal_code(id_code, id_usuario, codigo) VALUES(DEFAULT, $1, $2)',
     q9: 'SELECT * from departamento;',
-    q15: 'SELECT usta.nombre as nombre_usuario, usta.correo, ar.id_articulo, ar.nombre  as nombre_articulo, ar.precio, ar.cantidad, de.nombre as nombre_departamento from articulos as ar, departamento as de, usuario_tabla as usta WHERE de.id_departamento = ar.id_departamento AND usta.id_usuario = ar.id_usuario;',
+    q15: 'SELECT usta.nombre as nombre_usuario, usta.correo, ar.id_articulo, ar.nombre  as nombre_articulo, ar.precio, ar.descripción, ar.cantidad, de.nombre as nombre_departamento from articulos as ar, departamento as de, usuario_tabla as usta WHERE de.id_departamento = ar.id_departamento AND usta.id_usuario = ar.id_usuario;',
     q6: 'SELECT * from articulos WHERE id_usuario = $1',
     q14: 'select tipo_usuario from usuario_tabla where id_usuario=$1',
 }
