@@ -87,7 +87,14 @@ module.exports.articulosMostrarVendedor = async (id) => {
 }
 
 
-
+module.exports.departamentoMostrar = async () => {
+    try{
+        const result = await db.any(config.q9)
+        return result;
+    }catch(err){
+        throw err
+    }
+}
 
 
 

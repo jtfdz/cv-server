@@ -136,29 +136,30 @@ router.post('/articulo/crear', auth.isAuth, (req, res) => {
 
 
 
-
-
-
-
-
-
-
-router.get('/estadisticas', auth.isAuth, (req, res) => {
-    user.estadisticas(sessionHelper.getIdFromSession(req)).then((data) => {
+router.get('/departamentos', (req, res) => {
+    user.departamentoMostrar().then((data) => {
         let message, status;
         if(data !== null){
-            message = "estadísticas desplegadas :).";
+            message = "departamentos desplegados :).";
             status = 200;
         }else{
-            message = "estadísticas NO desplegadas :(.",
+            message = "departamentos NO desplegados :(.",
             status = 404;
         }
         res.json({data, message, status});
     }).catch(err => {
         console.log(err)
-        res.json({status: 500, message: 'Error al enviar estadísticas.'})
+        res.json({status: 500, message: 'Error al enviar departamentos.'})
     })
 })
+
+
+
+
+
+
+
+
 
 
 
