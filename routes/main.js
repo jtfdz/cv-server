@@ -136,7 +136,7 @@ router.post('/articulo/crear', auth.isAuth, (req, res) => {
 
 
 
-router.get('/departamentos', (req, res) => {
+router.get('/departamento', (req, res) => {
     user.departamentoMostrar().then((data) => {
         let message, status;
         if(data !== null){
