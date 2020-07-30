@@ -10,13 +10,19 @@ let usuario = require('./models/usuario');
 var app = express();
 var cors = require('cors');
 
+app.use(cors({
+  origin: true,
+  credentials: true
+}))
 
 app.use(cors({
-  methodS: "GET,PUT,POST,DELETE",
+  methods: "GET,PUT,POST,DELETE",
   credentials: true,
-  optionsSuccessStatus: 200,
-  origin: true //CAMBIAR AL LINK DE HEROKU ETCÉTERA
+  optionsSuccessStatus: 203,
+  allowheaders: 'Content-Type,Origin',
+  origin: true 
   }));
+
 
 app.use(logger('dev')); //  formato_ Concise output colored by response status for development use.
 app.use(express.json());
@@ -36,7 +42,11 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+
 passport.use(require('./models/strategy'));
+
 
 passport.serializeUser(function(user, done){
     done(null, {id_usuario: user.id_usuario})

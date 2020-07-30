@@ -7,12 +7,12 @@ let user = require('../models/usuario');
 const { check, validationResult } = require('express-validator');
 
 
-
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
 router.post('/login', auth.isLogged, passport.authenticate('local'), function(req, res){
+    console.log(req.session)
     res.json({mensaje: "Logged in con éxito.", status: 200})
 });
 
@@ -71,13 +71,13 @@ router.post('/registrar',
 
 
 
-
 router.get('/articulos', (req, res) => {
 let message, status;
 
 if(req.session.user){
 
 user.articulosMostrar(sessionHelper.getIdFromSession(req)).then((tipo) => {
+    console.log(tipo)
         if(tipo === 3){
             user.articulosMostrarVendedor(sessionHelper.getIdFromSession(req))
             .then((data) => {
